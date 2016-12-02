@@ -34,6 +34,14 @@ const makeTurn = (dir) => {
 	}
 }
 
+const parseMove = (move) => {
+	return move.match(/(R|L)(\d+)/)
+}
+
+const getStateDistance = () => {
+	return Math.abs(state.x) + Math.abs(state.y)
+}
+
 const go = (steps) => {
 	switch (state.dir) {
 		case DIR_N:
@@ -49,11 +57,60 @@ const go = (steps) => {
 			state.x -= steps
 			break
 	}
+}
 
-	state.visited.push([
-		state.x,
-		state.y,
-	].join(':'))
+const makeMove = (move) => {
+	if (! move || ! move.length) {
+		return
+	}
+
+	const [ both, turn, numOfSteps ] = move
+	makeTurn(turn.trim())
+	go(parseInt(numOfSteps, 10))
+}
+
+const goAndTellIfVisited = (steps) => {
+	for (var i = 0; i < steps; i += 1) {
+		switch (state.dir) {
+			case DIR_N:
+				state.y += 1
+				break
+			case DIR_E:
+				state.x += 1
+				break
+			case DIR_S:
+				state.y -= 1
+				break
+			case DIR_W:
+				state.x -= 1
+				break
+		}
+
+		const location = [
+			state.x,
+			state.y,
+		].join(':');
+
+		const didVisited = state.visited.indexOf(location) > -1
+		state.visited.push(location)
+
+		if (didVisited) {
+			return true
+		}
+	}
+
+	return false
+}
+
+const makeMoveAndTellIfVisited = (move) => {
+	if (! move || ! move.length) {
+		return
+	}
+
+	const [ both, turn, numOfSteps ] = move
+	makeTurn(turn.trim())
+
+	return goAndTellIfVisited(parseInt(numOfSteps, 10))
 }
 
 export const getDistance = (moves) => {
@@ -61,16 +118,23 @@ export const getDistance = (moves) => {
 	const splitted = moves.split(',')
 
 	splitted.map((item, index) => {
-		const move = item.match(/(R|L)(\d+)/)
-
-		if (! move || ! move.length) {
-			return
-		}
-
-		const [ both, turn, numOfSteps ] = item.match(/(R|L)(\d+)/)
-		makeTurn(turn.trim())
-		go(parseInt(numOfSteps, 10))
+		const move = parseMove(item)
+		makeMove(move);
 	})
 
-	return Math.abs(state.x) + Math.abs(state.y)
+	return getStateDistance()
+}
+
+export const getFirstVisitedTwiceDistance = (moves) => {
+	resetState()
+	const splitted = moves.split(',')
+
+	for (let index in splitted) {
+		const move = parseMove(splitted[index])
+		if (makeMoveAndTellIfVisited(move)) {
+			break;
+		}
+	}
+
+	return getStateDistance()
 }
