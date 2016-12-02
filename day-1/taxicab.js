@@ -1,3 +1,5 @@
+import extend from 'extend'
+
 const DIR_N = 1
 const DIR_E = 2
 const DIR_S = 3
@@ -7,13 +9,13 @@ const DEFAULT_STATE = {
 	x: 0,
 	y: 0,
 	dir: DIR_N,
-	visited: [],
+	visited: ['0:0'],
 }
 
 let state = DEFAULT_STATE;
 
 const resetState = () => {
-	state = Object.assign({}, DEFAULT_STATE)
+	state = extend(true, {}, DEFAULT_STATE)
 }
 
 const makeTurn = (dir) => {
