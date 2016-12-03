@@ -1,88 +1,78 @@
-import { firstPositionToScene, firstDecryptor } from './bathroom'
-import { secondPositionToScene, secondSceneToPosition, secondDecryptor } from './bathroom'
+import { mapCharToPosition, bathroomSecurity } from './bathroom'
+import { FIRST_SCENE_MAP, FIRST_START } from './bathroom'
+import { SECOND_SCENE_MAP, SECOND_START } from './bathroom'
 
 describe('bathroom', () => {
 
 	describe('first', () => {
 
-		it('should map position to scene', () => {
-			expect(firstPositionToScene({ x: 0, y: 0 })).toEqual(1)
-			expect(firstPositionToScene({ x: 0, y: 1 })).toEqual(2)
-			expect(firstPositionToScene({ x: 0, y: 2 })).toEqual(3)
-			expect(firstPositionToScene({ x: 1, y: 0 })).toEqual(4)
-			expect(firstPositionToScene({ x: 1, y: 1 })).toEqual(5)
-			expect(firstPositionToScene({ x: 1, y: 2 })).toEqual(6)
-			expect(firstPositionToScene({ x: 2, y: 0 })).toEqual(7)
-			expect(firstPositionToScene({ x: 2, y: 1 })).toEqual(8)
-			expect(firstPositionToScene({ x: 2, y: 2 })).toEqual(9)
+		it('should map scene char to position', () => {
+			const mapper = mapCharToPosition.bind(null, FIRST_SCENE_MAP)
+
+			expect(mapper('1')).toEqual({ x: 0, y: 0 })
+			expect(mapper('3')).toEqual({ x: 0, y: 2 })
+			expect(mapper('5')).toEqual({ x: 1, y: 1 })
+			expect(mapper('9')).toEqual({ x: 2, y: 2 })
 		})
 
-		it('should translate instructions', () => {
-			expect(firstDecryptor('')).toEqual('5')
-			expect(firstDecryptor('R')).toEqual('6')
-			expect(firstDecryptor('L')).toEqual('4')
-			expect(firstDecryptor('U')).toEqual('2')
-			expect(firstDecryptor('D')).toEqual('8')
-			expect(firstDecryptor('DDD')).toEqual('8')
-			expect(firstDecryptor('DR')).toEqual('9')
-			expect(firstDecryptor('UUDRUUDD')).toEqual('9')
-			expect(firstDecryptor(`
+		it('should descrypt bathroom', () => {
+			const bath = bathroomSecurity.bind(null, FIRST_SCENE_MAP, FIRST_START)
+
+			expect(bath('')).toEqual('5')
+			expect(bath('R')).toEqual('6')
+			expect(bath('L')).toEqual('4')
+			expect(bath('U')).toEqual('2')
+			expect(bath('D')).toEqual('8')
+			expect(bath('DDD')).toEqual('8')
+			expect(bath('DR')).toEqual('9')
+			expect(bath('UUDRUUDD')).toEqual('9')
+			expect(bath(`
 				LLU
 				DRDRRR
 			`)).toEqual('19')
-			expect(firstDecryptor(`
+			expect(bath(`
 				ULL
 				RRDDD
 				LURDL
 				UUUUD
 			`)).toEqual('1985')
 		})
-
 	})
 
 	describe('second', () => {
 
-		it('should map position to scene', () => {
-			expect(secondPositionToScene({ x: 0, y: 0 })).toEqual('')
-			expect(secondPositionToScene({ x: 0, y: 1 })).toEqual('')
-			expect(secondPositionToScene({ x: 0, y: 2 })).toEqual('1')
-			expect(secondPositionToScene({ x: 1, y: 0 })).toEqual('')
-			expect(secondPositionToScene({ x: 1, y: 1 })).toEqual('2')
-			expect(secondPositionToScene({ x: 1, y: 2 })).toEqual('3')
-			expect(secondPositionToScene({ x: 2, y: 0 })).toEqual('5')
-			expect(secondPositionToScene({ x: 2, y: 1 })).toEqual('6')
-			expect(secondPositionToScene({ x: 2, y: 2 })).toEqual('7')
+		it('should map scene char to position', () => {
+			const mapper = mapCharToPosition.bind(null, SECOND_SCENE_MAP)
+
+			expect(mapper('5')).toEqual({ x: 2, y: 0 })
+			expect(mapper('7')).toEqual({ x: 2, y: 2 })
+			expect(mapper('D')).toEqual({ x: 4, y: 2 })
 		})
 
-		it('should map scene to position', () => {
-			expect(secondSceneToPosition('5')).toEqual({ x: 2, y: 0 })
-			expect(secondSceneToPosition('7')).toEqual({ x: 2, y: 2 })
-			expect(secondSceneToPosition('D')).toEqual({ x: 4, y: 2 })
-		})
+		it('should descrypt bathroom', () => {
+			const bath = bathroomSecurity.bind(null, SECOND_SCENE_MAP, SECOND_START)
 
-		it('should translate instructions', () => {
-			expect(secondDecryptor('R')).toEqual('6')
-			expect(secondDecryptor('L')).toEqual('5')
-			expect(secondDecryptor('U')).toEqual('5')
-			expect(secondDecryptor('D')).toEqual('5')
-			expect(secondDecryptor('DDD')).toEqual('5')
-			expect(secondDecryptor('LLL')).toEqual('5')
-			expect(secondDecryptor('RRR')).toEqual('8')
-			expect(secondDecryptor('RRRRRRRRR')).toEqual('9')
-			expect(secondDecryptor('RD')).toEqual('A')
-			expect(secondDecryptor('RRDRUURR')).toEqual('4')
-			expect(secondDecryptor(`
+			expect(bath('R')).toEqual('6')
+			expect(bath('L')).toEqual('5')
+			expect(bath('U')).toEqual('5')
+			expect(bath('D')).toEqual('5')
+			expect(bath('DDD')).toEqual('5')
+			expect(bath('LLL')).toEqual('5')
+			expect(bath('RRR')).toEqual('8')
+			expect(bath('RRRRRRRRR')).toEqual('9')
+			expect(bath('RD')).toEqual('A')
+			expect(bath('RRDRUURR')).toEqual('4')
+			expect(bath(`
 				RRU
 				DRDRRR
 			`)).toEqual('3C')
-			expect(secondDecryptor(`
+			expect(bath(`
 				ULL
 				RRDDD
 				LURDL
 				UUUUD
 			`)).toEqual('5DB3')
 		})
-
 	})
 
 })
