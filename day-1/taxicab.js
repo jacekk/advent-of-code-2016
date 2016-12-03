@@ -12,7 +12,7 @@ const DEFAULT_STATE = {
 	visited: ['0:0'],
 }
 
-let state = DEFAULT_STATE;
+let state = DEFAULT_STATE
 
 const resetState = () => {
 	state = extend(true, {}, DEFAULT_STATE)
@@ -20,17 +20,17 @@ const resetState = () => {
 
 const makeTurn = (dir) => {
 	if (dir === 'R') {
-		state.dir += 1;
+		state.dir += 1
 	}
 	if (dir === 'L') {
-		state.dir -= 1;
+		state.dir -= 1
 	}
 
 	if (state.dir < 1) {
-		state.dir = 4;
+		state.dir = 4
 	}
 	if (state.dir > 4) {
-		state.dir = 1;
+		state.dir = 1
 	}
 }
 
@@ -89,7 +89,7 @@ const goAndTellIfVisited = (steps) => {
 		const location = [
 			state.x,
 			state.y,
-		].join(':');
+		].join(':')
 
 		const didVisited = state.visited.indexOf(location) > -1
 		state.visited.push(location)
@@ -119,7 +119,7 @@ export const getDistance = (moves) => {
 
 	splitted.map((item, index) => {
 		const move = parseMove(item)
-		makeMove(move);
+		makeMove(move)
 	})
 
 	return getStateDistance()
@@ -132,7 +132,7 @@ export const getFirstVisitedTwiceDistance = (moves) => {
 	for (let index in splitted) {
 		const move = parseMove(splitted[index])
 		if (makeMoveAndTellIfVisited(move)) {
-			break;
+			break
 		}
 	}
 

@@ -9,12 +9,12 @@ export const FIRST_SCENE_MAP = [
 	['1', '2', '3'],
 	['4', '5', '6'],
 	['7', '8', '9'],
-];
+]
 
 export const FIRST_START = {
 	x: 1,
 	y: 1,
-};
+}
 
 export const SECOND_SCENE_MAP = [
 	[' ', ' ', '1', ' ', ' '],
@@ -22,12 +22,12 @@ export const SECOND_SCENE_MAP = [
 	['5', '6', '7', '8', '9'],
 	[' ', 'A', 'B', 'C', ' '],
 	[' ', ' ', 'D', ' ', ' '],
-];
+]
 
 export const SECOND_START = {
 	x: 2,
 	y: 0,
-};
+}
 
 const state = {
 	position: {},
