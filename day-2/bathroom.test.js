@@ -2,7 +2,7 @@ import { mapCharToPosition, bathroomSecurity } from './bathroom'
 import { FIRST_SCENE_MAP, FIRST_START } from './bathroom'
 import { SECOND_SCENE_MAP, SECOND_START } from './bathroom'
 
-describe('bathroom', () => {
+describe('day 2 - bathroom', () => {
 
 	describe('first', () => {
 

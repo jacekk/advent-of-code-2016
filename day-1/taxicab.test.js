@@ -1,6 +1,6 @@
 import { getDistance, getFirstVisitedTwiceDistance } from './taxicab'
 
-describe('taxicab', () => {
+describe('day 1 - taxicab', () => {
 
 	it('should stay in place for no moves', () => {
 		expect(getDistance('')).toEqual(0);
