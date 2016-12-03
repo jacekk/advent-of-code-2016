@@ -1,4 +1,4 @@
-import { isTriangleValid, countValidTriangles } from './triangles'
+import { isTriangleValid, countValidTriangles, countValidTrianglesVertically } from './triangles'
 
 describe('day 3 - triangles', () => {
 
@@ -31,6 +31,19 @@ describe('day 3 - triangles', () => {
 			250 100 200
 			20 20 30
 		`)).toEqual(3)
+	})
+
+	it('should count valid triangles vertically', () => {
+		const same = `
+			3 4 2
+			3 3 3
+			2 5 7
+			30 40 20
+			20 50 35
+			20 20 20
+		`
+		expect(countValidTriangles(same)).toEqual(5)
+		expect(countValidTrianglesVertically(same)).toEqual(5)
 	})
 
 	it('should handle double spaces', () => {
