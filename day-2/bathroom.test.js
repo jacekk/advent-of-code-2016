@@ -1,11 +1,11 @@
-import { mapCharToPosition, bathroomSecurity } from './bathroom'
-import { FIRST_SCENE_MAP, FIRST_START } from './bathroom'
-import { SECOND_SCENE_MAP, SECOND_START } from './bathroom'
+import {
+	mapCharToPosition, bathroomSecurity,
+	FIRST_SCENE_MAP, FIRST_START,
+	SECOND_SCENE_MAP, SECOND_START,
+} from './bathroom'
 
 describe('day 2 - bathroom', () => {
-
 	describe('first', () => {
-
 		it('should map scene char to position', () => {
 			const mapper = mapCharToPosition.bind(null, FIRST_SCENE_MAP)
 
@@ -40,13 +40,16 @@ describe('day 2 - bathroom', () => {
 	})
 
 	describe('second', () => {
-
 		it('should map scene char to position', () => {
 			const mapper = mapCharToPosition.bind(null, SECOND_SCENE_MAP)
 
 			expect(mapper('5')).toEqual({ x: 2, y: 0 })
 			expect(mapper('7')).toEqual({ x: 2, y: 2 })
 			expect(mapper('D')).toEqual({ x: 4, y: 2 })
+		})
+
+		it('should handle no match on map scene to position', () => {
+			expect(mapCharToPosition([], 'non-existing')).toEqual(undefined)
 		})
 
 		it('should descrypt bathroom', () => {
@@ -74,5 +77,4 @@ describe('day 2 - bathroom', () => {
 			`)).toEqual('5DB3')
 		})
 	})
-
 })

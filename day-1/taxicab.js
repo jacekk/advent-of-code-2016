@@ -34,28 +34,24 @@ const makeTurn = (dir) => {
 	}
 }
 
-const parseMove = (move) => {
-	return move.match(/(R|L)(\d+)/)
-}
+const parseMove = move => move.match(/(R|L)(\d+)/)
 
-const getStateDistance = () => {
-	return Math.abs(state.x) + Math.abs(state.y)
-}
+const getStateDistance = () => Math.abs(state.x) + Math.abs(state.y)
 
 const go = (steps) => {
 	switch (state.dir) {
-		case DIR_N:
-			state.y += steps
-			break
-		case DIR_E:
-			state.x += steps
-			break
-		case DIR_S:
-			state.y -= steps
-			break
-		case DIR_W:
-			state.x -= steps
-			break
+	case DIR_N:
+		state.y += steps
+		break
+	case DIR_E:
+		state.x += steps
+		break
+	case DIR_S:
+		state.y -= steps
+		break
+	case DIR_W:
+		state.x -= steps
+		break
 	}
 }
 
@@ -64,26 +60,26 @@ const makeMove = (move) => {
 		return
 	}
 
-	const [ both, turn, numOfSteps ] = move
+	const [, turn, numOfSteps] = move
 	makeTurn(turn.trim())
 	go(parseInt(numOfSteps, 10))
 }
 
 const goAndTellIfVisited = (steps) => {
-	for (var i = 0; i < steps; i += 1) {
+	for (let i = 0; i < steps; i += 1) {
 		switch (state.dir) {
-			case DIR_N:
-				state.y += 1
-				break
-			case DIR_E:
-				state.x += 1
-				break
-			case DIR_S:
-				state.y -= 1
-				break
-			case DIR_W:
-				state.x -= 1
-				break
+		case DIR_N:
+			state.y += 1
+			break
+		case DIR_E:
+			state.x += 1
+			break
+		case DIR_S:
+			state.y -= 1
+			break
+		case DIR_W:
+			state.x -= 1
+			break
 		}
 
 		const location = [
@@ -104,10 +100,10 @@ const goAndTellIfVisited = (steps) => {
 
 const makeMoveAndTellIfVisited = (move) => {
 	if (! move || ! move.length) {
-		return
+		return undefined
 	}
 
-	const [ both, turn, numOfSteps ] = move
+	const [, turn, numOfSteps] = move
 	makeTurn(turn.trim())
 
 	return goAndTellIfVisited(parseInt(numOfSteps, 10))
@@ -117,7 +113,7 @@ export const getDistance = (moves) => {
 	resetState()
 	const splitted = moves.split(',')
 
-	splitted.map((item, index) => {
+	splitted.forEach((item) => {
 		const move = parseMove(item)
 		makeMove(move)
 	})
@@ -129,7 +125,7 @@ export const getFirstVisitedTwiceDistance = (moves) => {
 	resetState()
 	const splitted = moves.split(',')
 
-	for (let index in splitted) {
+	for (const index in splitted) {
 		const move = parseMove(splitted[index])
 		if (makeMoveAndTellIfVisited(move)) {
 			break

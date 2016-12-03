@@ -1,7 +1,6 @@
 import { isTriangleValid, countValidTriangles, countValidTrianglesVertically } from './triangles'
 
 describe('day 3 - triangles', () => {
-
 	it('should detect valid triangle by sides', () => {
 		expect(isTriangleValid([2, 3, 4])).toBeTruthy()
 		expect(isTriangleValid([4, 3, 2])).toBeTruthy()
@@ -49,5 +48,4 @@ describe('day 3 - triangles', () => {
 	it('should handle double spaces', () => {
 		expect(countValidTriangles('2     3  4')).toEqual(1)
 	})
-
 })

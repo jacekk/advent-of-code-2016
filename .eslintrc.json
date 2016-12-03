@@ -4,6 +4,7 @@
     "jest": true
   },
   "rules": {
+    "default-case": 0,
     "space-unary-ops": [
       "error",
       {
