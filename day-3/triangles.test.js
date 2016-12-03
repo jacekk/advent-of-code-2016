@@ -3,17 +3,17 @@ import { isTriangleValid, countValidTriangles, countValidTrianglesVertically } f
 describe('day 3 - triangles', () => {
 
 	it('should detect valid triangle by sides', () => {
-		expect(isTriangleValid(2, 3, 4)).toBeTruthy()
-		expect(isTriangleValid(4, 3, 2)).toBeTruthy()
-		expect(isTriangleValid(3, 4, 2)).toBeTruthy()
-		expect(isTriangleValid(300, 500, 250)).toBeTruthy()
-		expect(isTriangleValid(5, 5, 5)).toBeTruthy()
+		expect(isTriangleValid([2, 3, 4])).toBeTruthy()
+		expect(isTriangleValid([4, 3, 2])).toBeTruthy()
+		expect(isTriangleValid([3, 4, 2])).toBeTruthy()
+		expect(isTriangleValid([300, 500, 250])).toBeTruthy()
+		expect(isTriangleValid([5, 5, 5])).toBeTruthy()
 	})
 
 	it('should detect invalid triangle by sides', () => {
-		expect(isTriangleValid(1, 2, 7)).toBeFalsy()
-		expect(isTriangleValid(7, 2, 1)).toBeFalsy()
-		expect(isTriangleValid(2, 7, 1)).toBeFalsy()
+		expect(isTriangleValid([1, 2, 7])).toBeFalsy()
+		expect(isTriangleValid([7, 2, 1])).toBeFalsy()
+		expect(isTriangleValid([2, 7, 1])).toBeFalsy()
 	})
 
 	it('should count valid triangles', () => {

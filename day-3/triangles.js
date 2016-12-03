@@ -1,15 +1,7 @@
 import extend from 'extend'
 
-/**
- * @param  {array|int} a
- * @param  {int} b
- * @param  {int} c
- * @return {bool}
- */
-export const isTriangleValid = (a, b, c) => {
-	if (a.length && a.length === 3) {
-		[a, b, c] = a
-	}
+export const isTriangleValid = (sizes) => {
+	const [a, b, c] = sizes
 
 	return (
 		a + b > c &&
@@ -26,19 +18,17 @@ const parseLine = (line) => {
 	return line.trim().split(' ').filter(Boolean).map(parseLength)
 }
 
+const hasSizes = (line) => {
+	return line.length && line.length === 3
+}
+
 export const countValidTriangles = (input) => {
-	let counter = 0
-	const lines = input.split('\n')
-
-	lines.forEach((line) => {
-		const parsed = parseLine(line)
-
-		if (parsed.length === 3 && isTriangleValid(...parsed)) {
-			counter += 1
-		}
-	})
-
-	return counter
+	return input
+		.split('\n')
+		.map(parseLine)
+		.filter(hasSizes)
+		.filter(isTriangleValid)
+		.length
 }
 
 const mapFromColumnes = (lines) => {
@@ -63,18 +53,12 @@ const mapFromColumnes = (lines) => {
 }
 
 export const countValidTrianglesVertically = (input) => {
-	const lines = input.split('\n')
-	let parsedLines = []
+	const lines = input
+		.split('\n')
+		.map(parseLine)
+		.filter(hasSizes)
 
-	lines.forEach((line) => {
-		const parsed = parseLine(line)
-
-		if (parsed.length === 3) {
-			parsedLines.push(parseLine(line))
-		}
-	})
-
-	const mapped = mapFromColumnes(parsedLines)
-
-	return mapped.filter(isTriangleValid).length
+	return mapFromColumnes(lines)
+		.filter(isTriangleValid)
+		.length
 }
