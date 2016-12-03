@@ -1,37 +1,37 @@
-import { mapPositionToScene, getCodeFromInstructions } from './bathroom'
+import { firstPositionToScene, firstDecryptor } from './bathroom'
 
 describe('bathroom', () => {
 
 	it('should map position to scene', () => {
-		expect(mapPositionToScene({ x: 0, y: 0 })).toEqual(1)
-		expect(mapPositionToScene({ x: 0, y: 1 })).toEqual(2)
-		expect(mapPositionToScene({ x: 0, y: 2 })).toEqual(3)
-		expect(mapPositionToScene({ x: 1, y: 0 })).toEqual(4)
-		expect(mapPositionToScene({ x: 1, y: 1 })).toEqual(5)
-		expect(mapPositionToScene({ x: 1, y: 2 })).toEqual(6)
-		expect(mapPositionToScene({ x: 2, y: 0 })).toEqual(7)
-		expect(mapPositionToScene({ x: 2, y: 1 })).toEqual(8)
-		expect(mapPositionToScene({ x: 2, y: 2 })).toEqual(9)
+		expect(firstPositionToScene({ x: 0, y: 0 })).toEqual(1)
+		expect(firstPositionToScene({ x: 0, y: 1 })).toEqual(2)
+		expect(firstPositionToScene({ x: 0, y: 2 })).toEqual(3)
+		expect(firstPositionToScene({ x: 1, y: 0 })).toEqual(4)
+		expect(firstPositionToScene({ x: 1, y: 1 })).toEqual(5)
+		expect(firstPositionToScene({ x: 1, y: 2 })).toEqual(6)
+		expect(firstPositionToScene({ x: 2, y: 0 })).toEqual(7)
+		expect(firstPositionToScene({ x: 2, y: 1 })).toEqual(8)
+		expect(firstPositionToScene({ x: 2, y: 2 })).toEqual(9)
 	})
 
 	it('should translate instructions', () => {
-		expect(getCodeFromInstructions('')).toEqual(5)
-		expect(getCodeFromInstructions('R')).toEqual(6)
-		expect(getCodeFromInstructions('L')).toEqual(4)
-		expect(getCodeFromInstructions('U')).toEqual(2)
-		expect(getCodeFromInstructions('D')).toEqual(8)
-		expect(getCodeFromInstructions('DDD')).toEqual(8)
-		expect(getCodeFromInstructions('DR')).toEqual(9)
-		expect(getCodeFromInstructions('UUDRUUDD')).toEqual(9)
-		expect(getCodeFromInstructions(`
+		expect(firstDecryptor('')).toEqual('5')
+		expect(firstDecryptor('R')).toEqual('6')
+		expect(firstDecryptor('L')).toEqual('4')
+		expect(firstDecryptor('U')).toEqual('2')
+		expect(firstDecryptor('D')).toEqual('8')
+		expect(firstDecryptor('DDD')).toEqual('8')
+		expect(firstDecryptor('DR')).toEqual('9')
+		expect(firstDecryptor('UUDRUUDD')).toEqual('9')
+		expect(firstDecryptor(`
 			LLU
 			DRDRR
-		`)).toEqual(19)
-		expect(getCodeFromInstructions(`
+		`)).toEqual('19')
+		expect(firstDecryptor(`
 			ULL
 			RRDDD
 			LURDL
 			UUUUD
-		`)).toEqual(1985)
+		`)).toEqual('1985')
 	})
 })

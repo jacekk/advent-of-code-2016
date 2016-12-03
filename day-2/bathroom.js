@@ -10,10 +10,6 @@ const START = {
 	y: 1,
 }
 
-export const mapPositionToScene = (pos) => {
-	return pos.x * 3 + pos.y + 1
-}
-
 const state = {
 	position: {},
 	saved: [],
@@ -24,7 +20,11 @@ const resetState = () => {
 	state.saved = []
 }
 
-const handleMove = (move) => {
+export const firstPositionToScene = (pos) => {
+	return pos.x * 3 + pos.y + 1
+}
+
+const firstHandleMove = (move) => {
 	const pos = state.position
 
 	switch (move) {
@@ -51,22 +51,26 @@ const handleMove = (move) => {
 	}
 }
 
-const savePosition = () => {
-	const posAsSceneValue = mapPositionToScene(state.position)
-	state.saved.push(posAsSceneValue)
+const savePosition = (mapper) => {
+	const mapped = mapper(state.position)
+	state.saved.push(mapped)
 }
 
-export const getCodeFromInstructions = (input) => {
+const getCodeFromInstructions = (input, moveHandler, positionMapper) => {
 	resetState()
 	const lines = input.trim().split('\n')
 
 	lines.forEach((line) => {
 		const moves = line.trim().split('')
 		moves.forEach((move) => {
-			handleMove(move)
+			moveHandler(move)
 		})
-		savePosition()
+		savePosition(positionMapper)
 	})
 
-	return parseInt(state.saved.join(''))
+	return state.saved.join('')
+}
+
+export const firstDecryptor = (input) => {
+	return getCodeFromInstructions(input, firstHandleMove, firstPositionToScene)
 }
