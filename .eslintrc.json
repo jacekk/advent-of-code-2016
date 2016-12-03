@@ -4,6 +4,12 @@
     "jest": true
   },
   "rules": {
+    "guard-for-in": "off",
+    "no-restricted-syntax": [
+      "error",
+      "LabeledStatement",
+      "WithStatement"
+    ],
     "default-case": 0,
     "space-unary-ops": [
       "error",

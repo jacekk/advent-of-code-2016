@@ -39,10 +39,10 @@ const resetState = (startPosition) => {
 	state.saved = []
 }
 
-export const mapCharToPosition = (map, char) => {
-	for (const rowIndex in map) {
-		for (const colIndex in map[rowIndex]) {
-			if (char === map[rowIndex][colIndex]) {
+export const mapCharToPosition = (sceneMap, char) => {
+	for (const rowIndex in sceneMap) {
+		for (const colIndex in sceneMap[rowIndex]) {
+			if (char === sceneMap[rowIndex][colIndex]) {
 				return {
 					x: parseInt(rowIndex, 10),
 					y: parseInt(colIndex, 10),
