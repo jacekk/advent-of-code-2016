@@ -61,16 +61,11 @@ export const isRoomReal = (roomId) => {
 }
 
 export const countRealRoomsIdsSum = (input) => {
-	const lines = input.split('\n')
+	const lines = input.trim().split('\n')
 	let sum = 0
 
-	lines.forEach((line) => { // @todo use map, filter, reduce
+	lines.forEach((line) => {
 		const roomId = line.trim()
-
-		if (roomId.length === 0) {
-			return
-		}
-
 		const isReal = isRoomReal(roomId)
 
 		if (isReal) {
@@ -80,4 +75,52 @@ export const countRealRoomsIdsSum = (input) => {
 	})
 
 	return sum
+}
+
+const rotateCharById = (char, id) => {
+	const start = 'a'.charCodeAt(0)
+	const end = 'z'.charCodeAt(0)
+	const added = char.charCodeAt(0) - start
+	const range = (end - start) + 1
+	const rotated = added + id
+	const modulo = rotated % range
+	const newChar = String.fromCharCode(modulo + start)
+
+	return newChar
+}
+
+export const decryptRoomId = (roomId) => {
+	const { name, id } = splitRoomId(roomId.trim())
+	const mapChar = char => (char === '-' ? ' ' : rotateCharById(char, id))
+
+	return name
+		.split('')
+		.map(mapChar)
+		.join('')
+}
+
+export const findSectorIdByPhraseInRoomId = (input, needle) => {
+	const lines = input.trim().split('\n')
+	const realRooms = []
+
+	lines.forEach((line) => {
+		const roomId = line.trim()
+
+		if (! isRoomReal(roomId)) {
+			return
+		}
+
+		const { id } = splitRoomId(roomId)
+		const decrypted = decryptRoomId(roomId)
+
+		realRooms.push({
+			id,
+			decrypted,
+		})
+	})
+
+	return realRooms
+		.filter(item => item.decrypted.includes(needle))
+		.map(item => item.id)
+		.pop()
 }
