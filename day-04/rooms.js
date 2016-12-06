@@ -11,7 +11,7 @@ const splitRoomId = (roomId) => {
 	}
 }
 
-const countNameChars = (chars) => {
+export const countNameChars = (chars) => {
 	const dict = {}
 
 	chars.forEach((char) => {
@@ -30,7 +30,7 @@ const countNameChars = (chars) => {
 	return list
 }
 
-const orderNameCharsTopMost = chars => chars.sort((a, b) => {
+export const orderNameCharsTopMost = chars => chars.sort((a, b) => {
 	if (a.occurance > b.occurance) {
 		return -1
 	}
