@@ -8,8 +8,14 @@ describe('day 5 - chess', () => {
 		expect(replaceAt('___', '1', 5)).toEqual('_5_')
 	})
 
-	xit('should find the password from door id', () => { // skipped; takes lot of minutes to execute
-		expect(niceGameChess('abc')).toEqual('18f47a30')
-		expect(niceGameChessBetter('abc')).toEqual('05ace8e3')
+	it('should find the password from sample data', () => {
+		// short prefix and password
+		expect(niceGameChess('abc')).toEqual('35')
+		expect(niceGameChessBetter('abc')).toEqual('96')
+	})
+	xit('should find the password from door id', () => {
+		// takes a lot of minutes to execute for such long prefix and password
+		expect(niceGameChess('abc', '00000', 8)).toEqual('18f47a30')
+		expect(niceGameChessBetter('abc', '00000', 8)).toEqual('05ace8e3')
 	})
 })
