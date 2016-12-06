@@ -1,24 +1,26 @@
 import { countNameChars, orderNameCharsTopMost } from '../day-04/rooms'
 
-export const clearNoise = (input) => {
+const reduceNoise = (input, pickFromOrdered) => {
 	const lines = input
 		.trim()
 		.split('\n')
 		.map(line => line.trim())
 	const lineChars = lines[0].split('')
-	const mostFreq = []
 
-	lineChars.forEach((char, index) => {
-		const chars = []
+	return lineChars
+		.map((char, index) => {
+			const chars = []
 
-		lines.forEach((line) => {
-			chars.push(line[index])
-		})
+			lines.forEach((line) => {
+				chars.push(line[index])
+			})
 
-		const charsCounted = countNameChars(chars)
-		const charsOrdered = orderNameCharsTopMost(charsCounted)
-		mostFreq.push(charsOrdered[0].char)
-	})
+			const charsCounted = countNameChars(chars)
+			const charsOrdered = orderNameCharsTopMost(charsCounted)
 
-	return mostFreq.join('')
+			return pickFromOrdered(charsOrdered)
+		}).join('')
 }
+
+export const getMostFrequent = input => reduceNoise(input, chars => chars[0].char)
+export const getLeastFrequent = input => reduceNoise(input, chars => chars.pop().char)
