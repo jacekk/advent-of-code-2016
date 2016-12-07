@@ -22,15 +22,14 @@ export const containsABBA = (input) => {
 	return false
 }
 
-const removeSquareBrackets = input => input.replace(/(]|\[)/g, '')
+export const SUPERNET_REG_EXP = /](\w{3,})/ig
+export const HYPERNET_REG_EXP = /\[(\w+)]/ig
+export const removeSquareBrackets = input => input.replace(/(]|\[)/g, '')
 
 export const doesSupportTLS = (input) => {
-	const IP_REG_EXP = /](\w{4,})/ig
-	const HYPERNET_REG_EXP = /\[(\w+)]/ig
 	const trimmed = input.trim()
-
-	const hypernetMatches = trimmed.match(HYPERNET_REG_EXP)
-	const hypernetsThatSupport = hypernetMatches
+	const hypernetsThatSupport = trimmed
+		.match(HYPERNET_REG_EXP)
 		.map(removeSquareBrackets)
 		.filter(containsABBA)
 
@@ -38,12 +37,12 @@ export const doesSupportTLS = (input) => {
 		return false
 	}
 
-	const matches = `]${trimmed}`.match(IP_REG_EXP)
-	const matchesThatSupport = matches
+	const supernetThatSupports = `]${trimmed}`
+		.match(SUPERNET_REG_EXP)
 		.map(removeSquareBrackets)
 		.filter(containsABBA)
 
-	return matchesThatSupport.length !== 0
+	return supernetThatSupports.length !== 0
 }
 
 export const countSupportingTLS = input => input

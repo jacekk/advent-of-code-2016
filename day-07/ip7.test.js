@@ -1,4 +1,5 @@
 import { isABBA, containsABBA, doesSupportTLS, countSupportingTLS } from './ip7-tls'
+import { isABA, getBAB, extractABA, doesSupportSSL, countSupportingSSL } from './ip7-ssl'
 
 describe('day 7 - ip7', () => {
 	describe('TLS - transport-layer snooping', () => {
@@ -44,5 +45,38 @@ describe('day 7 - ip7', () => {
 		})
 	})
 	describe('SSL - super-secret listening', () => {
+		it('should check if given 3-letter string is Area-Broadcast Accessor', () => {
+			expect(isABA('oxo')).toEqual(true)
+			expect(isABA('oXo')).toEqual(true)
+
+			expect(isABA('abc')).toEqual(false)
+			expect(isABA('ooo')).toEqual(false)
+			expect(isABA('oxO')).toEqual(false)
+		})
+		it('should generate Byte Allocation Block from given ABA', () => {
+			expect(getBAB('oxo')).toEqual('xox')
+			expect(getBAB('oXo')).toEqual('XoX')
+		})
+		it('should detect all Area-Broadcast Accessor inside longer string', () => {
+			expect(extractABA('oxo')).toEqual(['oxo'])
+			expect(extractABA('oxooxo')).toEqual(['oxo', 'oxo'])
+			expect(extractABA('oxoxo')).toEqual(['oxo', 'xox', 'oxo'])
+			expect(extractABA('oxooox')).toEqual(['oxo'])
+		})
+		it('should detects if given ip7 supports TLS', () => {
+			expect(doesSupportSSL('aba[bab]xyz')).toEqual(true)
+			expect(doesSupportSSL('aaa[kek]eke')).toEqual(true)
+			expect(doesSupportSSL('zazbz[bzb]cdb')).toEqual(true)
+			expect(doesSupportSSL('zazbz[bzbxb]aaa[oxo]cdbd')).toEqual(true)
+
+			expect(doesSupportSSL('xyx[xyx]xyx')).toEqual(false)
+		})
+		it('should count ip7 entries that support SSL', () => {
+			expect(countSupportingSSL(`
+				aba[bab]xyz
+				zazbz[bzbxb]aaa[oxo]cdbd
+				xyx[xyx]xyx
+			`)).toEqual(2)
+		})
 	})
 })
