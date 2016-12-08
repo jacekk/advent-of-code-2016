@@ -1,6 +1,5 @@
 import extend from 'extend'
 
-
 export const PX_ON = '#'
 export const PX_OFF = '.'
 export const SIZE_HEI = 6
@@ -67,7 +66,6 @@ export const rotateColumn = (screen, index, offset) => {
 
 	return modified
 }
-
 
 export const operate = (screen, operation) => {
 	const REG_EXP_RECT = /rect (\d+)x(\d+)/

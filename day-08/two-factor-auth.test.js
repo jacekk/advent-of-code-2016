@@ -124,9 +124,7 @@ describe('day 8 - two factor auth', () => {
 	})
 
 	it('should parse list of operations', () => {
-		let screen = makeEmptyScreen()
-
-		screen = multipleOperations(screen, `
+		const screen = multipleOperations(makeEmptyScreen(), `
 			rect 3x3
 			rotate column x=2 by 1
 			rotate row y=2 by 2
