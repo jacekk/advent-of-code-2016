@@ -5,7 +5,10 @@ const removeWhitespacesAndLineBreaks = input => input
 	.filter(Boolean)
 	.join('')
 
-export const countSequence = input => removeWhitespacesAndLineBreaks(input).split(' ').join('').length
+export const countSequence = input => removeWhitespacesAndLineBreaks(input)
+	.split(' ')
+	.join('')
+	.length
 
 export const decompresses = (input) => {
 	let src = removeWhitespacesAndLineBreaks(input)
@@ -31,4 +34,27 @@ export const decompresses = (input) => {
 	}
 
 	return dest
+}
+
+export const decompressesRecursively = (input) => {
+	let src = removeWhitespacesAndLineBreaks(input)
+	let counter = 0
+
+	while (src.length > -1) {
+		const match = src.match(/\((\d+)x(\d+)\)(.*)/)
+
+		if (! match) {
+			return counter + src.length
+		}
+
+		const foundedAt = +match.index
+		const length = +match[1]
+		const repeats = +match[2]
+		const rest = match[3]
+		const toRepeat = rest.substring(0, length)
+
+		counter += foundedAt
+		counter += decompressesRecursively(toRepeat) * repeats
+		src = rest.substring(length)
+	}
 }
