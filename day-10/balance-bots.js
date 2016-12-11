@@ -73,25 +73,48 @@ export const findComparingBotNumber = (input, needleValues) => {
 	const searchedValues = needleValues.sort(sortNumbersAsc)
 	const botNumber = []
 
-	lines.forEach(readInstructions)
+	const executeBotJobs = (number) => {
+		const { values, jobs } = bots[number]
 
-	const checkBotValues = (number) => {
-		const bot = bots[number]
-
-		if (bot.values.length === needleValues.length) {
-			if (areArraysSame(bot.values, searchedValues)) {
+		if (values.length === needleValues.length) {
+			if (areArraysSame(values, searchedValues)) {
 				botNumber.push(+number)
 			}
 
-			bot.jobs
-				.splice(0, 1)
-				.pop()()
+			jobs.splice(0, 1).pop()()
 		}
 	}
 
+	lines.forEach(readInstructions)
 	while (countJobs() > 0) {
-		Object.keys(bots).forEach(checkBotValues)
+		Object.keys(bots).forEach(executeBotJobs)
 	}
 
 	return botNumber.pop()
+}
+
+export const multiplyOutputsValues = (input, outputsNumbers) => {
+	bots = {}
+	outputs = {}
+
+	const lines = removeWhitespacesAndLineBreaks(input)
+
+	const executeBotJobs = (number) => {
+		const { values, jobs } = bots[number]
+
+		if (values.length === 2) {
+			jobs.splice(0, 1).pop()()
+		}
+	}
+
+	lines.forEach(readInstructions)
+	while (countJobs() > 0) {
+		Object.keys(bots).forEach(executeBotJobs)
+	}
+
+	return Object.keys(outputs)
+		.filter(index => outputsNumbers.indexOf(+index) > -1)
+		.map(index => outputs[index])
+		.map(output => output.values.pop())
+		.reduce((prev, value) => prev * value, 1)
 }

@@ -1,4 +1,4 @@
-import { findComparingBotNumber } from './balance-bots'
+import { findComparingBotNumber, multiplyOutputsValues } from './balance-bots'
 
 describe('day 10 - balance bots', () => {
 	const sampleInstructions = `
@@ -12,5 +12,9 @@ describe('day 10 - balance bots', () => {
 
 	it('should find bot number who had compared values first', () => {
 		expect(findComparingBotNumber(sampleInstructions, [5, 2])).toEqual(2)
+	})
+
+	it('should multiply given outputs values', () => {
+		expect(multiplyOutputsValues(sampleInstructions, [0, 1])).toEqual(10)
 	})
 })
