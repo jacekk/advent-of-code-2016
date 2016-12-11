@@ -40,7 +40,7 @@ export const decompressesRecursively = (input) => {
 	let src = removeWhitespacesAndLineBreaks(input)
 	let counter = 0
 
-	while (src.length > -1) {
+	while (src.length > 0) {
 		const match = src.match(/\((\d+)x(\d+)\)(.*)/)
 
 		if (! match) {
@@ -57,4 +57,6 @@ export const decompressesRecursively = (input) => {
 		counter += decompressesRecursively(toRepeat) * repeats
 		src = rest.substring(length)
 	}
+
+	return counter
 }

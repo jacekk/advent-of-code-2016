@@ -25,6 +25,7 @@ describe('day 9 - explosives in cyberspace', () => {
 		`))).toEqual(11 + 6 + 18)
 	})
 	it('should recursively decompress given sequences', () => {
+		expect(decompressesRecursively('')).toEqual(0)
 		expect(decompressesRecursively('(3x3)XYZ')).toEqual(9)
 		expect(decompressesRecursively('X(8x2)(3x3)ABCY')).toEqual(20)
 		expect(decompressesRecursively('(27x12)(20x12)(13x14)(7x10)(1x12)A')).toEqual(241920)
