@@ -8,7 +8,6 @@ export const SIZE_WID = 50
 const int = input => parseInt(input, 10)
 const flatten = nested => [].concat([], ...nested)
 
-/*
 export const printScreen = (screen) => {
 	const stdout = screen
 		.map(row => row.join(''))
@@ -16,7 +15,6 @@ export const printScreen = (screen) => {
 
 	console.log(stdout)
 }
-*/
 
 export const makeEmptyScreen = () => Array(SIZE_HEI)
 	.fill()
